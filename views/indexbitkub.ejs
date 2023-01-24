@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BITKUB STOCK</title>
+
+    <link rel="icon" href="./imgs/logotitle.png" type="image/icon type">
+
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="index.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+<body>
+
+    <nav class="nav-4">
+            <div class="nav-container">
+                <a href="indexbitkub">
+                    <img src="./imgs/logobitkub.png" class="logonav">
+                </a>  
+                <!-- <H1 class="title-stockmain"><sub>STOCK</sub></H1>  -->
+                <div class="acc" id="Avatar">
+              
+                </div>
+                <div class="btn-group">
+                  <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                  </button>
+                  <ul class="dropdown-menu text-center" style="background: rgb(255, 255, 255); border: 1.5px solid black; cursor: pointer; font-size:20px">
+                    <li><a id="userName"  class="dropdown-item" style="font-size:20px" > </a></li>
+                    <li><a id="userLevel" style="color: rgb(41, 179, 179);"></a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a href="logout" style="color: red;">Logout</a></li>
+                  </ul>
+                </div>
+
+            </div>
+    </nav>
+
+      <div class="container-2">
+        <div class="sidebar">
+          <button class="menu-bar5" onclick="document.location='/'"><i class="fa-solid fa-backward"></i> HOMEPAGE </button> 
+          <h4>MENU</h4>
+          <button onclick="buyproduct()"  class="menu-bar3"  >
+            <i class="fa-solid fa-download"></i> IN STOCK
+          </button>
+          <button onclick="sellproduct()" class="menu-bar2"  >
+            <i class="fa-solid fa-upload"></i> OUT STOCK
+          </button>
+          <button   class="menu-bar4" data-bs-toggle="modal" data-bs-target="#modaladd">
+            <i class="fa-brands fa-dropbox"></i> ADD NEW PRODUCT
+          </button>
+          <p>
+          <!-- <h4>POP SET</h4>
+          <button onclick="reset_ddl1()"  class="menu-bar" data-bs-toggle="modal" data-bs-target="#modalSet">
+            <i class="fa-solid fa-boxes-stacked"></i> SET POP 3000
+          </button>
+          <button onclick="reset_ddl1()" class="menu-bar" data-bs-toggle="modal" data-bs-target="#modalSet2">
+            <i class="fa-solid fa-boxes-stacked"></i> SET POP PLUS
+          </button>
+          <button onclick="reset_ddl1()" class="menu-bar" data-bs-toggle="modal" data-bs-target="#modalSet3">
+            <i class="fa-solid fa-boxes-stacked"></i> SET POP SHOP
+          </button>
+          <td> -->
+            <p>
+            <h4><i class="fa-solid fa-exclamation"></i> Receipt & Info</h4>
+            <input  onfocus="this.value=''" class="info" id="invoid" type="text" style="text-align: center;" placeholder="กรอกข้อมูลอ้างอิง">
+        </div>
+ 
+      <div class="productcontainer"> 
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">Image</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Count</th>
+              </tr>
+            </thead>
+            <tbody id="tbody">
+              <tbody>
+                
+              </tbody>  
+            </tbody>
+        </table>      
+    </div>
+
+        <div class="container2">
+            <h4>REPORT & HISTORY</h4>
+             
+            <button class="menu-bar8" onclick="document.location='HistoryBuyPagebitkub'"><i class="fa-solid fa-clock-rotate-left"></i> IN </button> 
+            <button class="menu-bar8" onclick="document.location='HistorySellPagebitkub'"><i class="fa-solid fa-clock-rotate-left"></i> OUT </button>
+            <!-- <button class="menu-bar" onclick="document.location='HistorySet3000'"><i class="fa-solid fa-clock-rotate-left"></i> Set POP 3000 History</button>
+            <button class="menu-bar" onclick="document.location='HistorySetPlus'"><i class="fa-solid fa-clock-rotate-left"></i> Set POP Plus History</button>
+            <button class="menu-bar" onclick="document.location='HistorySetShop'"><i class="fa-solid fa-clock-rotate-left"></i> Set POP Shop History</button> -->
+            <p></p>
+            <button class="menu-bar8" onclick="document.location='rpabitkub'"><i class="fa-solid fa-table-cells"></i> All Product</button>
+          </div>
+        </div>
+      
+
+    <!-- modal set 3000 -->
+    <!-- <div id="modalSet" class="modal fade" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">POP 3000</h5>  
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <select  id="selectshirts" class="form-select" aria-label="Default select example">
+              <option value="" disabled selected>เลือกเสื้อ</option>
+            </select>   
+            <p></p>
+            <select  id="selectshirts2" class="form-select" aria-label="Default select example">
+              <option value="">เลือกเสื้อ</option>
+            </select>  
+            <p></p>
+            <select  id="selectshirts3" class="form-select" aria-label="Default select example">
+              <option value="">เลือกเสื้อ</option >
+            </select>  
+            <p></p>
+            <br>
+            <select  id="selectvinil" class="form-select" aria-label="Default select example">
+              <option value="">เลือกไวนิล</option>
+            </select>  
+          </div>
+          <div class="modal-footer">
+            <button id="closeaddmodal" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button  onclick="sellSetProduct()" type="button"  class="btn btn-success">Confirm</button>
+
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+    <!-- modal set pop plus -->
+    <!-- <div id="modalSet2" class="modal fade" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">POP PLUS</h5>  
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <select  id="selectshirts4" class="form-select" aria-label="Default select example">
+              <option value="" disabled selected>เลือกเสื้อ</option>
+            </select>   
+            <p></p>
+            <select  id="selectshirts5" class="form-select" aria-label="Default select example">
+              <option value="">เลือกเสื้อ</option>
+            </select>  
+            <p></p>
+            <select  id="selectshirts6" class="form-select" aria-label="Default select example">
+              <option value="">เลือกเสื้อ</option >
+            </select>  
+            <p></p>
+            <br>
+            <select  id="selectvinil2" class="form-select" aria-label="Default select example">
+              <option value="">เลือกไวนิล</option>
+            </select>  
+          </div>
+          <div class="modal-footer">
+            <button id="closeaddmodal" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button  onclick="sellSetProduct2()" type="button"  class="btn btn-success">Confirm</button>
+
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+    <!-- modal set pop Shop -->
+    <!-- <div id="modalSet3" class="modal fade" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">POP SHOP</h5>  
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <select  id="selectshirts7" class="form-select" aria-label="Default select example">
+              <option value="" disabled selected>เลือกเสื้อ</option>
+            </select>   
+            <p></p>
+            <select  id="selectshirts8" class="form-select" aria-label="Default select example">
+              <option value="">เลือกเสื้อ</option>
+            </select>  
+            <p></p>
+            <select  id="selectshirts9" class="form-select" aria-label="Default select example">
+              <option value="">เลือกเสื้อ</option >
+            </select>  
+            <p></p>
+            <br>
+            <select  id="selectvinil3" class="form-select" aria-label="Default select example">
+              <option value="">เลือกไวนิล</option>
+            </select>  
+          </div>
+          <div class="modal-footer">
+            <button id="closeaddmodal" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button  onclick="sellSetProduct3()" type="button"  class="btn btn-success">Confirm</button>
+
+          </div>
+        </div>
+      </div>
+    </div> -->
+    
+    
+    <!--modal Add Product-->
+    <div id="modaladd" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header4">
+              <h5 class="modal-title">Add Product</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <input  id="txtaddmodal" type="text" class="form-control" placeholder="Product Name">
+              <br>
+              <input id="txtaddquantity" type="text" class="form-control" placeholder="Quantity">
+            </div>
+            <div class="modal-footer">
+              <button  id="closeaddmodal" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button onclick="saveproduct()" type="button" class="btn btn-primary">Save changes</button>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      
+
+      <!--modal edit-->
+    <div id="modaledit" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Edit Product</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <input id="txteditmodalname" type="text" class="form-control" placeholder="Product Name">
+              <br>
+              <input id="txteditmodalquantity" type="text" class="form-control" placeholder="Product Quantity">
+              <br>
+              <input id="txteditmodalImg" type="text" class="form-control" placeholder="Product Img">
+            </div>
+            <div class="modal-footer">
+              <button id="closeeditmodal" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button  onclick="updateproduct()" type="button" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script>
+      
+        var data;
+        var productid = 0;
+        var buydata;
+        var selldata;
+        var vinildata;
+        var dataImg;
+        var dataname;
+        var datalevel;
+        let res = {};
+        let res_2 ={};
+        let res_3 ={};
+        let ves = {};
+        let ves_2 = {};
+        let ves_3 = {};
+        
+        $(document).ready(() =>{
+          getTime();
+          renderImg();
+          rendername();
+          renderLevel(); 
+        })
+
+         //get img
+         function renderImg() {
+            $.ajax({
+                  method: 'get',
+                  url:'/getImg',
+                  success: (response) => {
+                      
+                      console.log('Render Img !', response)
+                      if(response.resCode == 200) {
+                          dataImg = response.Result;
+                          if(dataImg.length > 0) {
+                            var html = '';
+                            for (let i = 0; i < dataImg.length; i++) {
+                              html += `
+                              <img class="image" src="${dataImg[i].img}" alt="">
+                              
+                              `;
+                            }   
+                            $("#Avatar").html(html)                                          
+                        }
+                      }
+                  }, error:(err) => {
+                      console.log('bad', err)
+                  }
+              }) 
+          }
+         //get name
+          function rendername() {
+            $.ajax({
+                  method: 'get',
+                  url:'/getname',
+                  success: (response) => {
+                      console.log('Render name !', response)
+                      if(response.resCode == 200) {
+                          dataname = response.Result;
+                          if(dataname.length > 0) {
+                            var html = '';
+                            for (let i = 0; i < dataname.length; i++) {
+                              html += `
+                              <h1 style="font-size:20px">${dataname[i].name}</h1>
+                              
+                              `;
+                            }   
+                            $("#userName").html(html)                                          
+                        }
+                      }
+                  }, error:(err) => {
+                      console.log('bad', err)
+                  }
+              }) 
+          } 
+         //get level
+          function renderLevel() {
+            $.ajax({
+                  method: 'get',
+                  url:'/getLevel',
+                  success: (response) => {
+                      // console.log('Render level !', response)
+                      if(response.resCode == 200) {
+                          datalevel = response.Result;
+                          // console.log('datalevel',datalevel)
+                          if(datalevel.length > 0) {
+                            var html = '';
+                            for (let i = 0; i < datalevel.length; i++) {
+                              html += `
+                              <h1 style="font-size:20px" >${datalevel[i].level}</h1>
+                              
+                              `;
+                              if(datalevel[i].level == 'Admin') {
+                                // console.log (datalevel[i].level)
+                                render()
+                              }else if(datalevel[i].level == 'Member'){
+                                render2()
+                              }else if(datalevel[i].level == 'Viewer'){
+                                render3()
+                              }
+                              // if(datalevel[i].level == 'Admin') {
+                              //   console.log ('levelCheck Admin!')
+                              //   let el = document.getElementById('dv0')
+                              //   el.setAttribute('class', 'displayDisable')
+                              // }else if(datalevel[i].level == 'Member'){
+                              //   console.log ('levelCheck Member!')
+                              //   let el = document.getElementById('dv0')
+                              //   el.setAttribute('class', 'displayDisable')
+                              // }else if(datalevel[i].level == 'Viewer'){
+                              //   console.log ('levelCheck Viewer!')
+                              //   let el_1 = document.getElementById('dv1')
+                              //   el_1.setAttribute('class', 'displayDisable')
+                              //   let el_2 = document.getElementById('CountDisplay')
+                              //   el_2.setAttribute('class', 'displayDisable')
+                              // }
+                            }   
+                            $("#userLevel").html(html)                                          
+                        }
+                      }
+                  }, error:(err) => {
+                      console.log('bad', err)
+                  }
+              }) 
+          } 
+        //get
+        function render() {
+          $.ajax({
+                method: 'get',
+                url:'/api/getallstockbitkub',
+                success: (response) => {
+                    console.log('Render Get Product !', response)
+                    if(response.resCode == 200) {
+                        data = response.Result;
+                        if(data.length > 0) {
+                          var html = '';
+                          for (let i = 0; i < data.length; i++) {
+                            html += `
+                              <tr>
+                                <th scope="row">${i+1}</th>
+                                <td>${data[i].name}</td>
+                                <td><img class="image" src="${data[i].img}" alt=""></td>
+                                <td>${data[i].quantity} ชิ้น</td> 
+                                <td>
+                                  <p>
+                                    <input  class="count" style="width:90px;" type="number" value ="0" id="totalClicks${i}" min="0" >
+                                    <button onclick="totalClicks(0,${i})" class="buttontrade">RESET</button>
+                                  </p>
+                                </td>
+                                <!--<td>
+                                <button onclick="editproduct(${data[i].id}, ${i})" type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modaledit">Edit</button>
+                                <button onclick="deleteproduct(${data[i].id}, ${i}, '${data[i].name}')" type="button" class="btn btn-danger">Delete</button>
+                                </td>-->
+                              </tr>
+                            `;
+                          }   
+                          $("#tbody").html(html)                                          
+                      }
+                    }
+                }, error:(err) => {
+                    console.log('bad', err)
+                }
+            }) 
+        }
+        
+
+        //getbuyhistory
+          function render2() {
+            $.ajax({
+                  method: 'get',
+                  url:'/api/getbuyhistorybitkub',
+                  success: (response) => {
+                      console.log('buyhistory', response)
+                      if(response.resCode == 200) {
+                        buydata = response.Result;
+                          if(buydata.length > 0) {
+                            var html2 = '';
+                            for (let i = 0; i < buydata.length; i++) {
+                              html2 += `
+                                <tr>
+                                  <td>${buydata[i].Date}</td>
+                                  <td>${buydata[i].stockname}</td> 
+                                  <td>${buydata[i].quantity}</td> 
+                                  <td>${buydata[i].invoid_no}</td> 
+                                </tr>
+                              `;
+                            }   
+                            $("#buybody").html(html2)    
+                            render();             
+                        }
+                      }
+                  }, error:(err) => {
+                      console.log('bad', err)
+                  }
+              })
+            }
+
+        //getsellhistory
+          function render3() {
+            $.ajax({
+                  method: 'get',
+                  url:'/api/getsellhistorybitkub',
+                  success: (response) => {
+                      console.log('sellhistory', response)
+                      if(response.resCode == 200) {
+                        selldata = response.Result;
+                          if(selldata.length > 0) {
+                            var html3 = '';
+                            for (let i = 0; i < selldata.length; i++) {
+                              html3 += `
+                                <tr>
+                                  <td>${selldata[i].Date}</td>
+                                  <td>${selldata[i].stockname}</td> 
+                                  <td>${selldata[i].quantity}</td> 
+                                  <td>${selldata[i].invoid_no}</td> 
+                                </tr>
+                              `;
+                            }   
+                            $("#sellbody").html(html3)    
+                            render();             
+                        }
+                      }
+                  }, error:(err) => {
+                      console.log('bad', err)
+                  }
+              })        
+        } 
+        
+
+        //create
+        function saveproduct() {
+          $.ajax({
+            method: 'post',
+            url:'/api/createstockbitkub',
+            data: {
+              name: $("#txtaddmodal").val(),
+              quantity: $("#txtaddquantity").val(),
+            }, success: (response) => {
+                console.log('good', response)
+                if(response.resCode == 200) {
+                  Swal.fire({
+                    icon: 'success',
+                    title:'Add Product Complete'
+                  })
+                  $("#closeaddmodal").trigger('click')
+                  render();
+                }
+            }, error: (err) => {
+                console.log('bad', err)
+            }
+          })
+        }
+        
+        function editproduct(pid, index) {
+          $("#txteditmodalname").val(data[index].name);
+          $("#txteditmodalquantity").val(data[index].quantity);
+          $("#txteditmodalImg").val(data[index].img);
+          productid = pid;
+        }
+ 
+        //update
+        function updateproduct() {
+          $.ajax({
+            method: 'put',
+            url: '/api/updatestockbitkub',
+            data:{
+              id: parseInt(productid),
+              name: $("#txteditmodalname").val(),
+              quantity: $("#txteditmodalquantity").val(),
+              img: $("#txteditmodalImg").val()
+            }, success: (response) => {
+              console.log('good', response)
+              if(response.resCode == 200) {
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Update successfuly'
+                })
+                $("#closeeditmodal").trigger('click')
+                render();
+              }
+            }, error: (err) => {
+              console.log('bad',err)
+            }
+          })
+        }
+
+          //เวลา
+          function getTime() {
+            var d = new Date();
+            var ds = String(d).split(" ");
+            var dd = new Date().getDate();
+            var dm = new Date().getMonth()+1;
+            var dy = new Date().getFullYear();
+            var th = new Date().getHours();
+            var tm = new Date().getMinutes();
+            var ts = new Date().getSeconds();
+            var dd1 = `${dd}-${dm}-${dy} ${th}:${tm}:${ts}`
+            timeSet = dd1
+            console.log('timeSet',timeSet)
+            return
+          }
+
+            //buy
+            function buyproduct(){
+               Swal.fire({
+                title: 'Do you want to save buy changes?',
+                showDenyButton: false,
+                showCancelButton: true,
+                confirmButtonText: 'Save',
+                denyButtonText: `Don't save`,
+               }).then((result) => {
+                 if (result.isConfirmed) {
+                  for (let i = 0; i < data.length; i++) {
+                      if($(`#totalClicks${i}`).val() !=0 ){ 
+                        console.log (parseInt(data[i].quantity) + parseInt($(`#totalClicks${i}`).val()))
+                        $.ajax({
+                          method: 'put',
+                          url: '/api/updatestockbitkub',
+                          data:{
+                            id: parseInt(data[i].id),
+                            name: data[i].name,
+                            quantity: parseInt(data[i].quantity) + parseInt($(`#totalClicks${i}`).val())
+                          }, 
+                          success: (response) => {
+                            console.log('good', response)
+                            if(response.resCode == 200) {
+                              $.ajax({
+                                method: 'post',
+                                url: '/api/insertstockbitkub',
+                                data: {
+                                  Date: timeSet,
+                                  stockname: data[i].name,
+                                  quantity: parseInt($(`#totalClicks${i}`).val()),
+                                  invoid_no: $("#invoid").val()
+                                }, 
+                                  success: (response) => {
+                                    temp = {
+                                        id: parseInt(data[i].id),
+                                        Date: timeSet ,
+                                        stockname: data[i].name,
+                                        quantity: parseInt($(`#totalClicks${i}`).val()),
+                                        invoid_no: $("#invoid").val()
+                                    }
+                                    console.log("temp",temp)
+                                    $("#closeeditmodal").trigger('click')
+                                    render();
+                                    ClearFields();  
+                                  }       
+                              })
+                            }
+                          }, 
+                          error: (err) => {
+                            console.log('bad',err)   
+                          }
+                        })
+                      }
+            }
+                  Swal.fire('Saved!', '', 'success')
+                } else if (result.isDenied) {
+                  Swal.fire('Changes are not saved', '', 'info')
+                }
+              })
+          }
+
+            //sell
+            function sellproduct(){
+               Swal.fire({
+                title: 'Do you want to save sell changes?',
+                showDenyButton: false,
+                showCancelButton: true,
+                confirmButtonText: 'Save',
+                denyButtonText: `Don't save`,
+               }).then((result) => {
+                 if (result.isConfirmed) {
+                  for (let i = 0; i < data.length; i++) {
+                      if($(`#totalClicks${i}`).val() !=0 ){ 
+                        console.log (parseInt(data[i].quantity) + parseInt($(`#totalClicks${i}`).val()))
+                        $.ajax({
+                          method: 'put',
+                          url: '/api/updatestockbitkub',
+                          data:{
+                            id: parseInt(data[i].id),
+                            name: data[i].name,
+                            quantity: parseInt(data[i].quantity) - parseInt($(`#totalClicks${i}`).val())
+                          }, 
+                          success: (response) => {
+                            console.log('good', response)
+                            if(response.resCode == 200) {
+                              $.ajax({
+                                method: 'post',
+                                url: '/api/insertsellstockbitkub',
+                                data: {
+                                  Date: timeSet,
+                                  stockname: data[i].name,
+                                  quantity: parseInt($(`#totalClicks${i}`).val()),
+                                  invoid_no: $("#invoid").val()
+                                }, 
+                                  success: (response) => {
+                                    temp = {
+                                        id: parseInt(data[i].id),
+                                        Date: timeSet ,
+                                        stockname: data[i].name,
+                                        quantity: parseInt($(`#totalClicks${i}`).val()),
+                                        invoid_no: $("#invoid").val()
+                                    }
+                                    console.log("temp",temp)
+                                    $("#closeeditmodal").trigger('click')
+                                    render();
+                                    ClearFields();  
+                                  }       
+                              })
+                            }
+                          }, 
+                          error: (err) => {
+                            console.log('bad',err)   
+                          }
+                        })
+                      }
+                   }
+                  Swal.fire('Saved!', '', 'success')
+                } else if (result.isDenied) {
+                  Swal.fire('Changes are not saved', '', 'info')
+                }
+              })
+            
+          }
+                 
+          
+
+        //delete
+        function deleteproduct(pid, index, name){
+          Swal.fire({
+              icon: "warning",
+              title: 'Are you sure to delete '+ name +'?',
+              showConfirmButton: false,
+              showDenyButton: true,
+              showCancelButton: true,
+              confirmButtonText: 'Save',
+              denyButtonText: `Delete`,
+          }).then((result) => {
+              if (result.isDenied) {
+                $.ajax({
+                  method: 'delete',
+                  url: '/api/deletestockbitkub',
+                  data: {
+                    id: pid
+                  }, success: (response) => {
+                    console.log('good', response)
+                    if(response.resCode == 200) {
+                      Swal.fire('Changes are saved', '', 'success')
+                      render();
+                    }
+                  }, error: (err) =>{
+                    console.log('bad', err)
+                  }
+                })
+                
+              }
+          })
+        }
+
+        $(function(){
+            $('#Set1BodyT').change(function(){
+              var display =$("#Set1BodyT option:selected").text();
+              $('#textresulte').val(display);
+            })
+        })
+
+
+
+        function totalClicks(click, totalid) {
+          const totalClicks = document.getElementById("totalClicks"+totalid);
+          const sumvalue = parseInt(totalClicks.value) +click;
+          console.log(sumvalue + click);
+          totalClicks.value = sumvalue;
+          console.log (totalClicks);
+
+          // avoid
+          if(totalid < 0) {
+            totalClicks.value = 0;
+          }
+          //Reset valute
+          if(click === 0){
+            totalClicks.value = 0;
+          }
+        }      
+
+        function totalClicks2(click, totalid) {
+          const totalClicks2 = document.getElementById("totalClicks2"+totalid);
+          const sumvalue = parseInt(totalClicks2.value) +click;
+          console.log(sumvalue + click);
+          totalClicks2.value = sumvalue;
+          console.log (totalClicks2);
+
+          // avoid
+          if(totalid < 0) {
+            totalClicks2.value = 0;
+          }
+          //Reset valute
+          if(click === 0){
+            totalClicks2.value = 0;
+          }
+        }      
+        
+        function ClearFields(){
+          document.getElementById("invoid").value = "";
+        }
+
+        function gettimetodate(Date) {
+          Date = parseInt(Date)
+          var d = new Date(Date)
+          var dd = d.getDate() < 10 ? '0'+d.getDate() : d.getDate();
+          var dm = (d.getMonth() < 10 ? '0'+d.getMonth() : d.getMonth()+1);
+          var dy = d.getFullYear();
+          var th = d.getHours() < 10 ? '0'+d.getHours() : d.getHours();
+          var tm = d.getMinutes() < 10 ? '0'+d.getMinutes() : d.getMinutes();
+          var ts = d.getSeconds() < 10 ? '0'+d.getSeconds() : d.getSeconds();
+
+          return `${dd}/${dm}/${dy} ${th}:${tm}:${ts}`
+
+        }
+
+
+    </script>
+</body>
+</html>

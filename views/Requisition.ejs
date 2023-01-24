@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Requisition</title>
+
+    <link rel="icon" href="./imgs/logotitle.png" type="image/icon type">
+
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="index.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+<body>
+
+    <nav class="nav-5">
+            <div class="nav-container">
+                <a href="Requisition">
+
+                </a>  
+                <H1 class="title-stockmain"><sub>APPROVAL</sub></H1> 
+                <div class="acc" id="Avatar">
+              
+                </div>
+                <div class="btn-group">
+                  <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                  </button>
+                  <ul class="dropdown-menu text-center" style="background: rgb(255, 255, 255); border: 1.5px solid black; cursor: pointer;">
+                    <li><a id="accname" class="dropdown-item" style="font-size:20px" ><%= name %></a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a href="logout" style="color: red;">Logout</a></li>
+                  </ul>
+                </div>
+
+            </div>
+    </nav>
+
+      <div class="container-2">
+        <div class="sidebar">
+          <button class="menu-bar5" onclick="document.location='/'"><i class="fa-solid fa-backward"></i> HOMEPAGE </button> 
+          <button class="menu-bar" onclick="document.location='ReqReport'" data-bs-toggle="modal" data-bs-target="#modalReq"> REQUISITION </button> 
+          <button class="menu-bar" onclick="document.location='rparequisition'" data-bs-toggle="modal" data-bs-target="#modalReq"> REQ REPORT </button> 
+        <!-- <input  onfocus="this.value=''" class="info" id="invoid" type="text" style="text-align: center;" placeholder="กรอกข้อมูลอ้างอิง">  -->
+        </div>
+
+        
+
+        <div class="container6">
+          <h5 style="text-align:center; margin-top: 10px;">PENDING APPROVAL</h5>
+          <div class="productcontainer2">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">วันที่/เวลา</th>
+                  <th scope="col">สินค้า</th>
+                  <th scope="col">รายละเอียด</th>
+                  <th scope="col">จำนวน</th>
+                  <th scope="col">ผู้เบิก</th>
+                  <th scope="col">สถานะ</th>
+                  <th scope="col">คำสั่ง(เฉพาะ Admin)</th>
+                  
+                </tr>
+              </thead>
+              <tbody id="cbody">
+                <tbody>
+                  
+                </tbody>  
+              </tbody>
+          </table> 
+        </div>
+      </div>
+ 
+      
+    <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script>
+
+      var dataReq;
+      var dataImg;
+
+      let res = {};
+
+      render()
+      render2()
+      render3()
+
+      $(document).ready(() =>{
+          renderImg()       
+        })
+
+      //get img
+      function renderImg() {
+            $.ajax({
+                  method: 'get',
+                  url:'/getImg',
+                  success: (response) => {
+                      
+                      console.log('Render Img !', response)
+                      if(response.resCode == 200) {
+                          dataImg = response.Result;
+                          if(dataImg.length > 0) {
+                            var html = '';
+                            for (let i = 0; i < dataImg.length; i++) {
+                              html += `
+                              <img class="image" src="${dataImg[i].img}" alt="">
+                              
+                              `;
+                            }   
+                            $("#Avatar").html(html)                                          
+                        }
+                      }
+                  }, error:(err) => {
+                      console.log('bad', err)
+                  }
+              }) 
+          }
+          
+      //save requisition
+      function saverequisition() {
+          $.ajax({
+            method: 'post',
+            url:'/api/createrequisition',
+            data: {
+              productnames: $("#productnames").val(),
+              total: $("#total").val(),
+              detail: $("#detail").val(),
+            }, success: (response) => {
+                console.log('good', response)
+                if(response.resCode == 200) {
+                  Swal.fire({
+                    icon: 'success',
+                    title:'Complete'
+                  })
+                  render();
+                  render2()
+                  render3()
+                }
+            }, error: (err) => {
+                console.log('bad', err)
+            }
+          })
+        }
+
+      //get flash
+      function render() {
+          $.ajax({
+                method: 'get',
+                url:'/api/getallstockflash',
+                success: (response) => {
+                    
+                    console.log('Render Get flash Product !', response)
+                    if(response.resCode == 200) {
+                        data = response.Result;
+                        if(data.length > 0) {
+                          var html = '';
+                          for (let i = 0; i < data.length; i++) {
+                            html += `
+                              <tr>
+                                <td>${data[i].name}</td>
+                                <td><img class="image" src="${data[i].img}" alt=""></td>
+                                <td>${data[i].quantity} ชิ้น</td> 
+                                <td>
+                                <!--<button onclick="editproduct(${data[i].id}, ${i})" type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modaledit">Edit</button>
+                                <button onclick="deleteproduct(${data[i].id}, ${i}, '${data[i].name}')" type="button" class="btn btn-danger">Delete</button>-->
+                                </td>
+                              </tr>
+                            `;
+                          }   
+                          $("#tbody").html(html)                                          
+                      }
+                    }
+                }, error:(err) => {
+                    console.log('bad', err)
+                }
+            }) 
+        }
+
+      //get bitkub
+      function render2() {
+          $.ajax({
+                method: 'get',
+                url:'/api/getallstockbitkub',
+                success: (response) => {
+                    
+                    console.log('Render Get bitkub Product !', response)
+                    if(response.resCode == 200) {
+                        data = response.Result;
+                        if(data.length > 0) {
+                          var html = '';
+                          for (let i = 0; i < data.length; i++) {
+                            html += `
+                              <tr>
+                                <td>${data[i].name}</td>
+                                <td><img class="image" src="${data[i].img}" alt=""></td>
+                                <td>${data[i].quantity} ชิ้น</td> 
+                                <td>
+                                <!--<button onclick="editproduct(${data[i].id}, ${i})" type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modaledit">Edit</button>
+                                <button onclick="deleteproduct(${data[i].id}, ${i}, '${data[i].name}')" type="button" class="btn btn-danger">Delete</button>-->
+                                </td>
+                              </tr>
+                            `;
+                          }   
+                          $("#bbody").html(html)                                          
+                      }
+                    }
+                }, error:(err) => {
+                    console.log('bad', err)
+                }
+            }) 
+        }
+
+      //get Requisition
+      function render3() {
+          $.ajax({
+                method: 'get',
+                url:'/api/getrequisition',
+                success: (response) => {
+                    
+                    console.log('Render requisition !', response)
+                    if(response.resCode == 200) {
+                        dataReq = response.Result;
+                        if(dataReq.length > 0) {
+                          var html = '';
+                          for (let i = 0; i < dataReq.length; i++) {
+                            html += `
+                              <tr>
+                                
+                                <td>${dataReq[i].Date}</th>
+                                <td>${dataReq[i].productnames}</td>
+                                <td>${dataReq[i].detail} </td> 
+                                <td>${dataReq[i].total} ชิ้น</td> 
+                                <td>${dataReq[i].acc}</td> 
+                                <td><p style="color:red">${dataReq[i].status}</p></td> 
+                                
+                                <!--<select id="mySelect" onchange="myFunction(${dataReq[i].id}, ${i}, '${dataReq[i].name}')">
+                                  <option value="">Pending</option>
+                                  <option value="Accept">Accept</option>
+                                  <option value="Cancel">Cancel</option>
+                                </select>--!>
+                          
+                                <td>
+                                  <button onclick="saveStatus(${dataReq[i].id}, ${i},'${dataReq[i].status}')" class="confirmReq" type="button">ยืนยัน</button>
+                                  <button onclick="cancelStatus(${dataReq[i].id}, ${i},'${dataReq[i].status}')" class="confirmReq2" type="button">ยกเลิก</button>
+                                  <button onclick="deleteproduct(${dataReq[i].id}, ${i},'${dataReq[i].status}')" class="confirmReq3" type="button">ลบคำขอ</button>
+                                </td>
+                                
+                                
+                              </tr>
+                            `;
+                          }   
+                          $("#cbody").html(html)                                          
+                      }
+                    }
+                }, error:(err) => {
+                    console.log('bad', err)
+                }
+            }) 
+        }
+
+        //confirmed Req
+        function confirmReq(pid, index, productnames){
+          Swal.fire({
+              icon: "warning",
+              title: 'ต้องการยืนยันคำร้องขอใช่หรือไม่ '+'?',
+              showConfirmButton: true,
+              showDenyButton: false,
+              showCancelButton: false,
+              confirmButtonText: 'ยืนยัน',
+              denyButtonText: `deleate`,
+          }).then((result) => {
+              if (result.isConfirmed) {
+                $.ajax({
+                  method: 'delete',
+                  url: '/api/deletestockrequisition',
+                  data: {
+                    id: pid
+                  }, success: (response) => {
+                    console.log('good', response)
+                    if(response.resCode == 200) {
+                      // Swal.fire('Changes are saved', '', 'success')                     
+                    }
+                    render();
+                    render2()
+                    render3()
+                    window.location.reload()
+                  }, error: (err) =>{
+                    console.log('bad', err)
+                  }
+                })
+                $("#modalReq").trigger('click')
+              }
+          })
+        }
+        
+
+        
+   
+         //savestatus
+        function saveStatus(pid, index, status) {
+          $.ajax({
+            method: 'put',
+            url: '/api/updateRequisition',
+            data:{
+              id: parseInt(pid),
+              status: "Accept"
+            }, success: (response) => {
+              console.log('good', response)
+              if(response.resCode == 200) {
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Update successfuly'
+                })
+                $("#closeeditmodal").trigger('click')
+                render();
+                  render2()
+                  render3()
+              }
+            }, error: (err) => {
+              console.log('bad',err)
+            }
+          })
+        }
+
+         //cancelstatus
+        function cancelStatus(pid, index, status) {
+          $.ajax({
+            method: 'put',
+            url: '/api/updateRequisition',
+            data:{
+              id: parseInt(pid),
+              status: "Cancel"
+            }, success: (response) => {
+              console.log('good', response)
+              if(response.resCode == 200) {
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Update successfuly'
+                })
+                $("#closeeditmodal").trigger('click')
+                render();
+                  render2()
+                  render3()
+              }
+            }, error: (err) => {
+              console.log('bad',err)
+            }
+          })
+        }
+
+         //delete
+         function deleteproduct(pid, index, name){
+          Swal.fire({
+              icon: "warning",
+              title: 'Are you sure to delete ?',
+              showConfirmButton: false,
+              showDenyButton: true,
+              showCancelButton: true,
+              confirmButtonText: 'Save',
+              denyButtonText: `Delete`,
+          }).then((result) => {
+              if (result.isDenied) {
+                $.ajax({
+                  method: 'delete',
+                  url: '/api/deletestockrequisition',
+                  data: {
+                    id: pid
+                  }, success: (response) => {
+                    console.log('good', response)
+                    if(response.resCode == 200) {
+                      window.location.reload();
+                      render();
+                    }
+                  }, error: (err) =>{
+                    console.log('bad', err)
+                  }
+                })
+                
+              }
+          })
+        }
+
+        $(function(){
+            $('#Set1BodyT').change(function(){
+              var display =$("#Set1BodyT option:selected").text();
+              $('#textresulte').val(display);
+            })
+        })
+
+    </script>
+</body>
+</html>

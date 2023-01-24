@@ -1,0 +1,255 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHIPPOPWAREHOUSE</title>
+
+    <link rel="icon" href="./imgs/logotitle.png" type="image/icon type">
+    <link rel="stylesheet" href="#" type="text/html" >
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="index.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</head>
+    
+<body>
+  <div class="acc" id="Avatar2">
+              
+  </div>
+    <div class="homepagecontainer">
+    <!-- <nav-main> ---> 
+        <div class="nav-container">
+            <a href="/">
+                <img src="./imgs/warehousenoback.png" class="logonav-main">
+            </a>  
+            
+            <div class="acc" id="Avatar">
+              
+            </div>
+            <div class="btn-group">
+              <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+              </button>
+              <ul class="dropdown-menu text-center" style="background: rgb(255, 255, 255); border: 1.5px solid black; cursor: pointer; font-size:20px">
+                <li><a id="userName"  class="dropdown-item" style="font-size:20px" > </a></li>
+                <li><a id="userLevel" style="color: rgb(41, 179, 179);"></a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a href="logout" style="color: red;">Logout</a></li>
+              </ul>
+            </div>
+        </div>
+
+ <!-- </nav-main> -->
+    
+<!-- <div class="containerhomepage">
+    <div class="sidebar2">
+      <h4></h4>
+      <button onclick="document.location='index'"  class="menu-bar"  >
+         SHIPPPOP
+      </button>
+      <p></p>
+      <button onclick="document.location='indexshipsabuy'" class="menu-bar6"  >
+        SHIPSABUY
+      </button>
+      <p></p>
+      <button onclick="document.location='indexflash'" class="menu-bar7"  >
+        FLASH
+      </button>
+      <p></p>
+      <button onclick="document.location='indexquik'" class="menu-bar10"  >
+        QUICK
+      </button>
+      <p></p>
+      <button onclick="document.location='indexpoststation'" class="menu-bar11"  >
+        POST STATION
+      </button>
+      <p></p>
+      <button onclick="document.location='indexbitkub'" class="menu-bar8"  >
+        BITKUB
+      </button>
+      <p></p>
+      <button onclick="document.location='Requisition'" class="menu-bar9"  >
+        REQUISITION
+      </button>
+    </div>  
+</div> -->
+<div class="containerhomepage">
+  <div class="sidebar2">
+   <h1 class="menu-bar-header" >
+    FRANCHISE
+   </h1>
+   <br>
+   <button onclick="document.location='index'"  class="homepage-bar"  >
+    SHIPPPOP
+  </button>
+  <button onclick="document.location='indexshipsabuy'" class="homepage-bar2"  >
+    SHIPSABUY
+  </button>
+  <button onclick="document.location='indexpoststation'" class="homepage-bar6"  >
+    POSTSTATION
+  </button>
+  <button onclick="document.location='indexquik'" class="homepage-bar10"  >
+    QUICK
+  </button>
+  </div>
+  <div class="sidebar3">
+    <h1 class="menu-bar-header" >
+      REQUIREMENT
+     </h1>
+     <br>
+     <button onclick="document.location='indexflash'" class="homepage-bar7"  >
+      FLASH
+    </button>
+    <button onclick="document.location='indexbitkub'" class="homepage-bar8"  >
+      BITKUB
+    </button>
+    <!-- <button onclick="document.location='Requisition'" class="menu-bar-1"  >
+      REQUISITION
+    </button> -->
+  </div>
+  <div class="sidebar4">
+    <h1 class="menu-bar-header" >
+      HR
+    </h1>
+    <br>
+    <button onclick="document.location=' '" class="menu-bar-1"  >
+      COMPUTER
+    </button>
+    <button onclick="document.location='indexshirtHR'" class="menu-bar-1"  >
+      SHIRT
+    </button>
+    <button onclick="document.location=' '" class="menu-bar-1"  >
+      USB
+    </button>
+  </div>
+    
+</div>
+
+</body>
+</html>
+<script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+<script>
+
+  var data;
+  var dataname;
+  var dataImg;
+  var dataname;
+  var datalevel;
+
+
+  $(document).ready(() =>{
+          renderImg();
+          rendername();
+          renderLevel();
+        })
+
+  //get img
+          function renderImg() {
+            $.ajax({
+                  method: 'get',
+                  url:'/getImg',
+                  success: (response) => {
+                      
+                      console.log('Render Img !', response)
+                      if(response.resCode == 200) {
+                          dataImg = response.Result;
+                          if(dataImg.length > 0) {
+                            var html = '';
+                            for (let i = 0; i < dataImg.length; i++) {
+                              html += `
+                              <img class="image" src="${dataImg[i].img}" alt="">
+                              
+                              `;
+                            }   
+                            $("#Avatar").html(html)                                          
+                        }
+                      }
+                  }, error:(err) => {
+                      console.log('bad', err)
+                  }
+              }) 
+          }
+         //get name
+          function rendername() {
+            $.ajax({
+                  method: 'get',
+                  url:'/getname',
+                  success: (response) => {
+                      console.log('Render name !', response)
+                      if(response.resCode == 200) {
+                          dataname = response.Result;
+                          if(dataname.length > 0) {
+                            var html = '';
+                            for (let i = 0; i < dataname.length; i++) {
+                              html += `
+                              <h1 style="font-size:20px">${dataname[i].name}</h1>
+                              
+                              `;
+                            }   
+                            $("#userName").html(html)                                          
+                        }
+                      }
+                  }, error:(err) => {
+                      console.log('bad', err)
+                  }
+              }) 
+          } 
+         //get level
+          function renderLevel() {
+            $.ajax({
+                  method: 'get',
+                  url:'/getLevel',
+                  success: (response) => {
+                      // console.log('Render level !', response)
+                      if(response.resCode == 200) {
+                          datalevel = response.Result;
+                          // console.log('datalevel',datalevel)
+                          if(datalevel.length > 0) {
+                            var html = '';
+                            for (let i = 0; i < datalevel.length; i++) {
+                              html += `
+                              <h1 style="font-size:20px" >${datalevel[i].level}</h1>
+                              
+                              `;
+                              // if(datalevel[i].level == 'Admin') {
+                              //   // console.log (datalevel[i].level)
+                              //   render()
+                              // }else if(datalevel[i].level == 'Member'){
+                              //   render2()
+                              // }else if(datalevel[i].level == 'Viewer'){
+                              //   render3()
+                              // }
+                              // if(datalevel[i].level == 'Admin') {
+                              //   console.log ('levelCheck Admin!')
+                              //   let el = document.getElementById('dv0')
+                              //   el.setAttribute('class', 'displayDisable')
+                              // }else if(datalevel[i].level == 'Member'){
+                              //   console.log ('levelCheck Member!')
+                              //   let el = document.getElementById('dv0')
+                              //   el.setAttribute('class', 'displayDisable')
+                              // }else if(datalevel[i].level == 'Viewer'){
+                              //   console.log ('levelCheck Viewer!')
+                              //   let el_1 = document.getElementById('dv1')
+                              //   el_1.setAttribute('class', 'displayDisable')
+                              //   let el_2 = document.getElementById('CountDisplay')
+                              //   el_2.setAttribute('class', 'displayDisable')
+                              // }
+                            }   
+                            $("#userLevel").html(html)                                          
+                        }
+                      }
+                  }, error:(err) => {
+                      console.log('bad', err)
+                  }
+              }) 
+          } 
+
+
+
+
+</script>
